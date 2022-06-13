@@ -1,37 +1,62 @@
+using System.Collections;
 using UnityEngine;
-
-[RequireComponent(typeof(Light))]
+using UnityEngine.Events;
 
 public class Alarm : MonoBehaviour
 {
-    [SerializeField] private float _duration;
-    [SerializeField] private Color _targetColor;
-    [SerializeField] private Color _defaultColor;
+    [SerializeField] private GameObject _door;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _signalSound;
+    [SerializeField] private UnityEvent _entered;
 
-    private float _runningTime;
-    private Color _startColor;
-    private Light _light;
+    private float _minVolumeValue = 0;
+    private float _maxVolumeValue = 1;
+    private float _stepValue = 0.05f;
+    private float _step = 0;
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        _light = GetComponent<Light>();
-        _startColor = _defaultColor;
+        if (collision.TryGetComponent<ThiefMoving>(out ThiefMoving thief)) 
+        {
+            _step = 0;
+            _audioSource.Stop();
+            _audioSource.PlayOneShot(_signalSound);
+            StopAllCoroutines();
+            StartCoroutine(TurnOnSignal());
+            _door.SetActive(false);
+        }
     }
 
-    public void ChangeColor() 
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (_light.color != _targetColor)
-        {
-            _runningTime += Time.deltaTime;
-            float _normalizeRunningTime = _runningTime / _duration;
+        _entered?.Invoke();
+    }
 
-            _light.color = Color.Lerp(_startColor, _targetColor, _normalizeRunningTime);
-        }
-        else
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        _step = 0;
+        StopAllCoroutines();
+        StartCoroutine(TurnOffSignal());
+        _door.SetActive(true);
+    }
+
+    private IEnumerator TurnOnSignal()
+    {
+        while (_audioSource.volume < _audioSource.maxDistance)
         {
-            _targetColor = _startColor;
-            _startColor = _light.color;
-            _runningTime = 0;
+            _step += _stepValue;
+            _audioSource.volume = Mathf.MoveTowards(_minVolumeValue, _maxVolumeValue, _step);
+            yield return new WaitForSeconds(_stepValue);
+        }
+    }
+
+    private IEnumerator TurnOffSignal()
+    {
+        while (_audioSource.volume > 0)
+        {
+            _step += _stepValue;
+            _audioSource.volume = Mathf.MoveTowards(_maxVolumeValue, _minVolumeValue, _step);
+            yield return new WaitForSeconds(_stepValue);
         }
     }
 }
