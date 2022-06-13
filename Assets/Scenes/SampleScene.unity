@@ -4795,7 +4795,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.6226415, g: 0.6205518, b: 0.28488788, a: 1}
+  m_Color: {r: 0.2830189, g: 0.28169942, b: 0.16954434, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -5427,7 +5427,6 @@ GameObject:
   - component: {fileID: 1723423601}
   - component: {fileID: 1723423600}
   - component: {fileID: 1723423602}
-  - component: {fileID: 1723423603}
   - component: {fileID: 1723423599}
   m_Layer: 0
   m_Name: SignalLamp
@@ -5448,23 +5447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ecf169dd9da4441b98d7da052d4e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _door: {fileID: 297079385}
   _audioSource: {fileID: 1723423602}
   _signalSound: {fileID: 8300000, guid: 6cc8452a03f69c349b2f43215b291ab1, type: 3}
-  _entered:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1108198754}
-        m_MethodName: Change
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!212 &1723423600
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5523,7 +5507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723423598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.510466, y: -1.968641, z: 0}
+  m_LocalPosition: {x: 2.510466, y: -1.968641, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1108198753}
@@ -5626,32 +5610,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!61 &1723423603
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723423598}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 5.9488277, y: -2.8757625}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.22, y: 0.36}
-    newSize: {x: 0.22, y: 0.36}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.265152, y: 0.40228796}
-  m_EdgeRadius: 0
 --- !u!1 &1742203438
 GameObject:
   m_ObjectHideFlags: 0
@@ -6623,6 +6581,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2058930196}
+  - component: {fileID: 2058930198}
+  - component: {fileID: 2058930197}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -6647,6 +6607,87 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2058930197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058930195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0724cca7b8fe30e4f9a7f7c2033aed73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _door: {fileID: 297079385}
+  _entered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1723423599}
+        m_MethodName: EnterToHouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _leaved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1723423599}
+        m_MethodName: LeaveHouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _started:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1108198754}
+        m_MethodName: Change
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!61 &2058930198
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058930195}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.3013735, y: -1.9236469}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.22, y: 0.36}
+    newSize: {x: 0.22, y: 0.36}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.2085905, y: 0.4588499}
+  m_EdgeRadius: 0
 --- !u!1 &2073886350
 GameObject:
   m_ObjectHideFlags: 0
