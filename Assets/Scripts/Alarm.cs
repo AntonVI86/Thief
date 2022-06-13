@@ -18,32 +18,22 @@ public class Alarm : MonoBehaviour
         _audioSource.Stop();
         _audioSource.PlayOneShot(_signalSound);
         StopAllCoroutines();
-        StartCoroutine(TurnOnSignal());
+        StartCoroutine(ChangeVolume(_minVolumeValue, _maxVolumeValue));
     }
 
     public void LeaveHouse() 
     {
         _step = 0;
         StopAllCoroutines();
-        StartCoroutine(TurnOffSignal());
+        StartCoroutine(ChangeVolume(_maxVolumeValue, _minVolumeValue));
     }
 
-    private IEnumerator TurnOnSignal()
+    private IEnumerator ChangeVolume(float currentValue, float targetValue)
     {
-        while (_audioSource.volume < _audioSource.maxDistance)
+        while (_audioSource.volume != targetValue)
         {
             _step += _stepValue;
-            _audioSource.volume = Mathf.MoveTowards(_minVolumeValue, _maxVolumeValue, _step);
-            yield return new WaitForSeconds(_stepValue);
-        }
-    }
-
-    private IEnumerator TurnOffSignal()
-    {
-        while (_audioSource.volume > 0)
-        {
-            _step += _stepValue;
-            _audioSource.volume = Mathf.MoveTowards(_maxVolumeValue, _minVolumeValue, _step);
+            _audioSource.volume = Mathf.MoveTowards(currentValue, targetValue, _step);
             yield return new WaitForSeconds(_stepValue);
         }
     }
